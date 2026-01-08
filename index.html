@@ -330,28 +330,164 @@
         function initSampleData() {
             const sampleTasks = [
                 {
-                    description: 'Design gear assembly for lifgo 5.0',
+                    description: 'Develop flow chart diagram for system startup from different states',
                     assignedTo: 'Person A',
                     priority: 'High',
-                    dueDate: '2026-01-15',
-                    status: 'In Progress',
-                    notes: 'Waiting on CAD review'
-                },
-                {
-                    description: 'Calculate torque specifications',
-                    assignedTo: 'Person B',
-                    priority: 'High',
-                    dueDate: '2026-01-12',
-                    status: 'Not Started',
-                    notes: 'Need load requirements first'
-                },
-                {
-                    description: 'Order materials from supplier',
-                    assignedTo: 'Person A',
-                    priority: 'Medium',
                     dueDate: '2026-01-20',
                     status: 'Not Started',
-                    notes: 'Pending budget approval'
+                    notes: 'Block diagram showing logic from shutoff and other states'
+                },
+                {
+                    description: 'Create flow diagram for normal production operation',
+                    assignedTo: 'Person A',
+                    priority: 'High',
+                    dueDate: '2026-01-20',
+                    status: 'Not Started',
+                    notes: 'Include user interaction flow'
+                },
+                {
+                    description: 'Verify Galil IO count and mapping',
+                    assignedTo: 'Person B',
+                    priority: 'High',
+                    dueDate: '2026-01-15',
+                    status: 'Not Started',
+                    notes: 'Looks like 16 IO. Limit switches to stage ports'
+                },
+                {
+                    description: 'Source and spec light curtain for loading',
+                    assignedTo: 'Person B',
+                    priority: 'High',
+                    dueDate: '2026-01-18',
+                    status: 'Not Started',
+                    notes: 'Can use one stored in lab for testing'
+                },
+                {
+                    description: 'Configure Nextion HMI (circular) for user interface',
+                    assignedTo: 'Person A',
+                    priority: 'High',
+                    dueDate: '2026-01-25',
+                    status: 'Not Started',
+                    notes: 'Alarm reset, load notifications, status display'
+                },
+                {
+                    description: 'Design/source Galil breakout board',
+                    assignedTo: 'Person B',
+                    priority: 'High',
+                    dueDate: '2026-01-22',
+                    status: 'Not Started',
+                    notes: 'May need 2 boards or custom design'
+                },
+                {
+                    description: 'Breakout encoder counts on box',
+                    assignedTo: 'Person B',
+                    priority: 'Medium',
+                    dueDate: '2026-01-25',
+                    status: 'Not Started',
+                    notes: 'From Galil breakout'
+                },
+                {
+                    description: 'Contact Micro-Epsilon about ILD 1420 customizations',
+                    assignedTo: 'Person A',
+                    priority: 'Medium',
+                    dueDate: '2026-01-30',
+                    status: 'Not Started',
+                    notes: 'For scale purchase options'
+                },
+                {
+                    description: 'Source limit switches (GE-style) for coupling lift',
+                    assignedTo: 'Person B',
+                    priority: 'High',
+                    dueDate: '2026-01-18',
+                    status: 'Not Started',
+                    notes: 'For scanning system'
+                },
+                {
+                    description: 'Design loading/return area with large gap (no pinch points)',
+                    assignedTo: 'Person A',
+                    priority: 'High',
+                    dueDate: '2026-01-22',
+                    status: 'Not Started',
+                    notes: 'Operator safety - decided on very large gap'
+                },
+                {
+                    description: 'Specify power requirements: 120V main, 480V vacuum/compressor',
+                    assignedTo: 'Person B',
+                    priority: 'High',
+                    dueDate: '2026-01-16',
+                    status: 'Not Started',
+                    notes: 'Stages 72V, Galil 72V, other components 24V'
+                },
+                {
+                    description: 'Research previous compressor specs',
+                    assignedTo: 'Person B',
+                    priority: 'Low',
+                    dueDate: '2026-02-01',
+                    status: 'Not Started',
+                    notes: 'Likely will use existing compressor'
+                },
+                {
+                    description: 'Design electrical bus - unify voltage levels if possible',
+                    assignedTo: 'Person B',
+                    priority: 'Medium',
+                    dueDate: '2026-01-25',
+                    status: 'Not Started',
+                    notes: 'Use PNP type for safety (wire cut protection)'
+                },
+                {
+                    description: 'Integrate Hope Industrial HMI into system',
+                    assignedTo: 'Person A',
+                    priority: 'Medium',
+                    dueDate: '2026-01-28',
+                    status: 'Not Started',
+                    notes: 'In addition to Nextion HMI'
+                },
+                {
+                    description: 'Configure Galil for high-sourcing solenoid control',
+                    assignedTo: 'Person B',
+                    priority: 'Medium',
+                    dueDate: '2026-01-30',
+                    status: 'Not Started',
+                    notes: 'Solenoid valve control'
+                },
+                {
+                    description: 'Verify 120V wall outlet current capacity',
+                    assignedTo: 'Person B',
+                    priority: 'High',
+                    dueDate: '2026-01-15',
+                    status: 'Not Started',
+                    notes: 'Should be sufficient for system'
+                },
+                {
+                    description: 'Source 10A power supply for lifting motor',
+                    assignedTo: 'Person B',
+                    priority: 'High',
+                    dueDate: '2026-01-20',
+                    status: 'Not Started',
+                    notes: 'Required for motor support'
+                },
+                {
+                    description: 'Design future compatibility board (Ethernet breakout)',
+                    assignedTo: 'Person A',
+                    priority: 'Low',
+                    dueDate: '2026-02-10',
+                    status: 'Not Started',
+                    notes: 'For future signal routing from box'
+                },
+                {
+                    description: 'Reference Bobcat wiring schematics for stages',
+                    assignedTo: 'Person B',
+                    priority: 'Medium',
+                    dueDate: '2026-01-18',
+                    status: 'Not Started',
+                    notes: 'Use exact Bobcat setup'
+                },
+                {
+                    description: 'Adapt Bobcat Galil program for this system',
+                    assignedTo: 'Person A',
+                    priority: 'Medium',
+                    dueDate: '2026-01-30',
+                    status: 'Not Started',
+                    notes: 'Use as example/template'
                 }
             ];
             
