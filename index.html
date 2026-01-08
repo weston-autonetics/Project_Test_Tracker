@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Task Tracker</title>
     <style>
-        /* (CSS unchanged – omitted here for brevity in explanation, but included fully below) */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
             min-height: 100vh;
         }
+        
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -21,13 +26,23 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
+        
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
         }
-        .header h1 { font-size: 28px; margin-bottom: 10px; }
-        .header p { opacity: 0.9; font-size: 14px; }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
         .controls {
             padding: 20px 30px;
             background: #f8f9fa;
@@ -37,6 +52,7 @@
             flex-wrap: wrap;
             align-items: center;
         }
+        
         .btn {
             padding: 10px 20px;
             border: none;
@@ -46,108 +62,589 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .btn-primary { background: #667eea; color: white; }
-        .btn-success { background: #48bb78; color: white; }
-        .table-container { overflow-x: auto; padding: 30px; }
-        table { width: 100%; border-collapse: collapse; }
-        thead { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        th, td { padding: 15px 12px; border-bottom: 1px solid #e9ecef; }
-        input, select { width: 100%; padding: 8px; }
-        .delete-btn { background: #fc8181; color: white; border: none; padding: 6px 12px; }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            padding: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        tbody tr {
+            transition: background 0.2s ease;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .priority-high {
+            background: #fc8181;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .priority-medium {
+            background: #f6ad55;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .priority-low {
+            background: #68d391;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-not-started {
+            color: #718096;
+            font-weight: 600;
+        }
+        
+        .status-in-progress {
+            color: #3182ce;
+            font-weight: 600;
+        }
+        
+        .status-review {
+            color: #d69e2e;
+            font-weight: 600;
+        }
+        
+        .status-completed {
+            color: #38a169;
+            font-weight: 600;
+        }
+        
+        .delete-btn {
+            background: #fc8181;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .delete-btn:hover {
+            background: #f56565;
+            transform: scale(1.05);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px 30px;
+            background: #f8f9fa;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            font-size: 12px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .export-info {
+            padding: 15px 30px;
+            background: #edf2f7;
+            font-size: 13px;
+            color: #4a5568;
+            border-top: 1px solid #cbd5e0;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>📋 Project Task Tracker</h1>
-        <p>Manage tasks for your 2-person team efficiently</p>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Project Task Tracker</h1>
+            <p>Manage tasks for your 2-person team efficiently</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Tasks</h3>
+                <div class="number" id="totalTasks">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>In Progress</h3>
+                <div class="number" id="inProgressTasks">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <div class="number" id="completedTasks">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>High Priority</h3>
+                <div class="number" id="highPriorityTasks">0</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-primary" onclick="addTask()">➕ Add New Task</button>
+            <button class="btn btn-success" onclick="exportToCSV()">📥 Export to CSV</button>
+        </div>
+        
+        <div class="table-container">
+            <table id="taskTable">
+                <thead>
+                    <tr>
+                        <th style="width: 5%">#</th>
+                        <th style="width: 25%">Task Description</th>
+                        <th style="width: 12%">Assigned To</th>
+                        <th style="width: 10%">Priority</th>
+                        <th style="width: 12%">Due Date</th>
+                        <th style="width: 12%">Status</th>
+                        <th style="width: 18%">Notes</th>
+                        <th style="width: 6%">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="taskBody">
+                    <!-- Sample rows will be added here -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="export-info">
+            💡 <strong>Tip:</strong> Click "Export to CSV" to download this data and open it in Excel, Google Sheets, or any spreadsheet application.
+        </div>
     </div>
 
-    <div class="controls">
-        <button class="btn btn-primary" onclick="addTask()">➕ Add New Task</button>
-        <button class="btn btn-success" onclick="exportToCSV()">📥 Export to CSV</button>
-    </div>
-
-    <div class="table-container">
-        <table id="taskTable">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Task Description</th>
-                    <th>Assigned To</th>
-                    <th>Priority</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Notes</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="taskBody"></tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-let taskCounter = 1;
-
-function initSampleData() {
-    const sampleTasks = [
-        { description: 'Develop flow chart for startup states', assignedTo: 'Raj', priority: 'High', dueDate: '2026-01-20', status: 'Not Started', notes: '' },
-        { description: 'Verify Galil IO count', assignedTo: 'Weston', priority: 'High', dueDate: '2026-01-15', status: 'Not Started', notes: '' },
-        { description: 'Configure Nextion HMI', assignedTo: 'Raj', priority: 'High', dueDate: '2026-01-25', status: 'Not Started', notes: '' },
-        { description: 'Design Galil breakout board', assignedTo: 'Weston', priority: 'High', dueDate: '2026-01-22', status: 'Not Started', notes: '' }
-    ];
-    sampleTasks.forEach(addTaskWithData);
-}
-
-function addTask() {
-    const row = document.getElementById('taskBody').insertRow();
-    row.innerHTML = `
-        <td>${taskCounter++}</td>
-        <td><input type="text"></td>
-        <td>
-            <select>
-                <option value="">Select...</option>
-                <option value="Raj">Raj</option>
-                <option value="Weston">Weston</option>
-                <option value="Both">Both</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>Low</option>
-                <option>Medium</option>
-                <option>High</option>
-            </select>
-        </td>
-        <td><input type="date"></td>
-        <td>
-            <select>
-                <option>Not Started</option>
-                <option>In Progress</option>
-                <option>Review</option>
-                <option>Completed</option>
-            </select>
-        </td>
-        <td><input type="text"></td>
-        <td><button class="delete-btn" onclick="this.closest('tr').remove()">Delete</button></td>
-    `;
-}
-
-function addTaskWithData(data) {
-    const row = document.getElementById('taskBody').insertRow();
-    row.innerHTML = `
-        <td>${taskCounter++}</td>
-        <td><input type="text" value="${data.description}"></td>
-        <td>
-            <select>
-                <option value="Raj" ${data.assignedTo === 'Raj' ? 'selected' : ''}>Raj</option>
-                <option value="Weston" ${data.assignedTo === 'Weston' ? 'selected' : ''}>Weston</option>
-                <option value="Both" ${data.assignedTo === 'Both' ? 'selected' : ''}>Both</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option ${data.priority === 'Low' ? 'selected' : ''}>Low</option>
-                <option ${data.priority === 'Medium' ? 'selected' : ''}>Medium</option>
-                <option ${data.priority === 'Hi
+    <script>
+        let taskCounter = 1;
+        
+        // Initialize with sample data
+        function initSampleData() {
+            const sampleTasks = [
+                {
+                    description: 'Develop flow chart diagram for system startup from different states',
+                    assignedTo: 'Raj',
+                    priority: 'High',
+                    dueDate: '2026-01-20',
+                    status: 'Not Started',
+                    notes: 'Block diagram showing logic from shutoff and other states'
+                },
+                {
+                    description: 'Create flow diagram for normal production operation',
+                    assignedTo: 'Raj',
+                    priority: 'High',
+                    dueDate: '2026-01-20',
+                    status: 'Not Started',
+                    notes: 'Include user interaction flow'
+                },
+                {
+                    description: 'Verify Galil IO count and mapping',
+                    assignedTo: 'Weston',
+                    priority: 'High',
+                    dueDate: '2026-01-15',
+                    status: 'Not Started',
+                    notes: 'Looks like 16 IO. Limit switches to stage ports'
+                },
+                {
+                    description: 'Source and spec light curtain for loading',
+                    assignedTo: 'Weston',
+                    priority: 'High',
+                    dueDate: '2026-01-18',
+                    status: 'Not Started',
+                    notes: 'Can use one stored in lab for testing'
+                },
+                {
+                    description: 'Configure Nextion HMI (circular) for user interface',
+                    assignedTo: 'Raj',
+                    priority: 'High',
+                    dueDate: '2026-01-25',
+                    status: 'Not Started',
+                    notes: 'Alarm reset, load notifications, status display'
+                },
+                {
+                    description: 'Design/source Galil breakout board',
+                    assignedTo: 'Weston',
+                    priority: 'High',
+                    dueDate: '2026-01-22',
+                    status: 'Not Started',
+                    notes: 'May need 2 boards or custom design'
+                },
+                {
+                    description: 'Breakout encoder counts on box',
+                    assignedTo: 'Weston',
+                    priority: 'Medium',
+                    dueDate: '2026-01-25',
+                    status: 'Not Started',
+                    notes: 'From Galil breakout'
+                },
+                {
+                    description: 'Contact Micro-Epsilon about ILD 1420 customizations',
+                    assignedTo: 'Raj',
+                    priority: 'Medium',
+                    dueDate: '2026-01-30',
+                    status: 'Not Started',
+                    notes: 'For scale purchase options'
+                },
+                {
+                    description: 'Source limit switches (GE-style) for coupling lift',
+                    assignedTo: 'Weston',
+                    priority: 'High',
+                    dueDate: '2026-01-18',
+                    status: 'Not Started',
+                    notes: 'For scanning system'
+                },
+                {
+                    description: 'Design loading/return area with large gap (no pinch points)',
+                    assignedTo: 'Raj',
+                    priority: 'High',
+                    dueDate: '2026-01-22',
+                    status: 'Not Started',
+                    notes: 'Operator safety - decided on very large gap'
+                },
+                {
+                    description: 'Specify power requirements: 120V main, 480V vacuum/compressor',
+                    assignedTo: 'Weston',
+                    priority: 'High',
+                    dueDate: '2026-01-16',
+                    status: 'Not Started',
+                    notes: 'Stages 72V, Galil 72V, other components 24V'
+                },
+                {
+                    description: 'Research previous compressor specs',
+                    assignedTo: 'Weston',
+                    priority: 'Low',
+                    dueDate: '2026-02-01',
+                    status: 'Not Started',
+                    notes: 'Likely will use existing compressor'
+                },
+                {
+                    description: 'Design electrical bus - unify voltage levels if possible',
+                    assignedTo: 'Weston',
+                    priority: 'Medium',
+                    dueDate: '2026-01-25',
+                    status: 'Not Started',
+                    notes: 'Use PNP type for safety (wire cut protection)'
+                },
+                {
+                    description: 'Integrate Hope Industrial HMI into system',
+                    assignedTo: 'Raj',
+                    priority: 'Medium',
+                    dueDate: '2026-01-28',
+                    status: 'Not Started',
+                    notes: 'In addition to Nextion HMI'
+                },
+                {
+                    description: 'Configure Galil for high-sourcing solenoid control',
+                    assignedTo: 'Weston',
+                    priority: 'Medium',
+                    dueDate: '2026-01-30',
+                    status: 'Not Started',
+                    notes: 'Solenoid valve control'
+                },
+                {
+                    description: 'Verify 120V wall outlet current capacity',
+                    assignedTo: 'Weston',
+                    priority: 'High',
+                    dueDate: '2026-01-15',
+                    status: 'Not Started',
+                    notes: 'Should be sufficient for system'
+                },
+                {
+                    description: 'Source 10A power supply for lifting motor',
+                    assignedTo: 'Weston',
+                    priority: 'High',
+                    dueDate: '2026-01-20',
+                    status: 'Not Started',
+                    notes: 'Required for motor support'
+                },
+                {
+                    description: 'Design future compatibility board (Ethernet breakout)',
+                    assignedTo: 'Raj',
+                    priority: 'Low',
+                    dueDate: '2026-02-10',
+                    status: 'Not Started',
+                    notes: 'For future signal routing from box'
+                },
+                {
+                    description: 'Reference Bobcat wiring schematics for stages',
+                    assignedTo: 'Weston',
+                    priority: 'Medium',
+                    dueDate: '2026-01-18',
+                    status: 'Not Started',
+                    notes: 'Use exact Bobcat setup'
+                },
+                {
+                    description: 'Adapt Bobcat Galil program for this system',
+                    assignedTo: 'Raj',
+                    priority: 'Medium',
+                    dueDate: '2026-01-30',
+                    status: 'Not Started',
+                    notes: 'Use as example/template'
+                }
+            ];
+            
+            sampleTasks.forEach(task => {
+                addTaskWithData(task);
+            });
+        }
+        
+        function addTask() {
+            const tbody = document.getElementById('taskBody');
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${taskCounter++}</td>
+                <td><input type="text" placeholder="Enter task description..."></td>
+                <td>
+                    <select>
+                        <option value="">Select...</option>
+                        <option value="Raj">Raj</option>
+                        <option value="Weston">Weston</option>
+                        <option value="Both">Both</option>
+                    </select>
+                </td>
+                <td>
+                    <select onchange="updatePriorityStyle(this)">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </td>
+                <td><input type="date"></td>
+                <td>
+                    <select onchange="updateStats()">
+                        <option value="Not Started">Not Started</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Review">Review</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Add notes..."></td>
+                <td><button class="delete-btn" onclick="deleteTask(this)">Delete</button></td>
+            `;
+            updateStats();
+        }
+        
+        function addTaskWithData(data) {
+            const tbody = document.getElementById('taskBody');
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${taskCounter++}</td>
+                <td><input type="text" value="${data.description}"></td>
+                <td>
+                    <select>
+                        <option value="">Select...</option>
+                        <option value="Raj" ${data.assignedTo === 'Raj' ? 'selected' : ''}>Raj</option>
+                        <option value="Weston" ${data.assignedTo === 'Weston' ? 'selected' : ''}>Weston</option>
+                        <option value="Both" ${data.assignedTo === 'Both' ? 'selected' : ''}>Both</option>
+                    </select>
+                </td>
+                <td>
+                    <select onchange="updatePriorityStyle(this)">
+                        <option value="Low" ${data.priority === 'Low' ? 'selected' : ''}>Low</option>
+                        <option value="Medium" ${data.priority === 'Medium' ? 'selected' : ''}>Medium</option>
+                        <option value="High" ${data.priority === 'High' ? 'selected' : ''}>High</option>
+                    </select>
+                </td>
+                <td><input type="date" value="${data.dueDate}"></td>
+                <td>
+                    <select onchange="updateStats()">
+                        <option value="Not Started" ${data.status === 'Not Started' ? 'selected' : ''}>Not Started</option>
+                        <option value="In Progress" ${data.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                        <option value="Review" ${data.status === 'Review' ? 'selected' : ''}>Review</option>
+                        <option value="Completed" ${data.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                    </select>
+                </td>
+                <td><input type="text" value="${data.notes}" placeholder="Add notes..."></td>
+                <td><button class="delete-btn" onclick="deleteTask(this)">Delete</button></td>
+            `;
+            updateStats();
+        }
+        
+        function deleteTask(btn) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                const row = btn.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+                updateStats();
+                renumberTasks();
+            }
+        }
+        
+        function renumberTasks() {
+            const rows = document.querySelectorAll('#taskBody tr');
+            rows.forEach((row, index) => {
+                row.cells[0].textContent = index + 1;
+            });
+            taskCounter = rows.length + 1;
+        }
+        
+        function updateStats() {
+            const rows = document.querySelectorAll('#taskBody tr');
+            let total = rows.length;
+            let inProgress = 0;
+            let completed = 0;
+            let highPriority = 0;
+            
+            rows.forEach(row => {
+                const status = row.cells[5].querySelector('select').value;
+                const priority = row.cells[3].querySelector('select').value;
+                
+                if (status === 'In Progress') inProgress++;
+                if (status === 'Completed') completed++;
+                if (priority === 'High') highPriority++;
+            });
+            
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('inProgressTasks').textContent = inProgress;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('highPriorityTasks').textContent = highPriority;
+        }
+        
+        function exportToCSV() {
+            const rows = document.querySelectorAll('#taskTable tr');
+            let csv = [];
+            
+            // Headers
+            const headers = ['#', 'Task Description', 'Assigned To', 'Priority', 'Due Date', 'Status', 'Notes'];
+            csv.push(headers.join(','));
+            
+            // Data rows
+            const dataRows = document.querySelectorAll('#taskBody tr');
+            dataRows.forEach(row => {
+                const data = [
+                    row.cells[0].textContent,
+                    '"' + row.cells[1].querySelector('input').value + '"',
+                    row.cells[2].querySelector('select').value,
+                    row.cells[3].querySelector('select').value,
+                    row.cells[4].querySelector('input').value,
+                    row.cells[5].querySelector('select').value,
+                    '"' + row.cells[6].querySelector('input').value + '"'
+                ];
+                csv.push(data.join(','));
+            });
+            
+            // Download
+            const csvContent = csv.join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'project_tasks_' + new Date().toISOString().split('T')[0] + '.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Initialize with sample data
+        initSampleData();
+    </script>
+</body>
+</html>
